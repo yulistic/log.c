@@ -17,6 +17,7 @@
 
 // Comment out to disable printing.
 #define ENABLE_PRINT 1
+// #define ENABLE_CALLBACK 1
 
 typedef struct {
 	va_list ap;
@@ -38,8 +39,6 @@ enum { LOGC_TRACE, LOGC_DEBUG, LOGC_INFO, LOGC_WARN, LOGC_ERROR, LOGC_FATAL };
 #define log_debug(...) log_log(LOGC_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
 #define log_info(...) log_log(LOGC_INFO, __FILE__, __LINE__, __VA_ARGS__)
 #define log_warn(...) log_log(LOGC_WARN, __FILE__, __LINE__, __VA_ARGS__)
-#define log_error(...) log_log(LOGC_ERROR, __FILE__, __LINE__, __VA_ARGS__)
-#define log_fatal(...) log_log(LOGC_FATAL, __FILE__, __LINE__, __VA_ARGS__)
 
 #else
 
@@ -55,14 +54,11 @@ enum { LOGC_TRACE, LOGC_DEBUG, LOGC_INFO, LOGC_WARN, LOGC_ERROR, LOGC_FATAL };
 #define log_warn(...)                                                          \
 	do {                                                                   \
 	} while (0)
-#define log_error(...)                                                         \
-	do {                                                                   \
-	} while (0)
-#define log_fatal(...)                                                         \
-	do {                                                                   \
-	} while (0)
 
 #endif
+
+#define log_error(...) log_log(LOGC_ERROR, __FILE__, __LINE__, __VA_ARGS__)
+#define log_fatal(...) log_log(LOGC_FATAL, __FILE__, __LINE__, __VA_ARGS__)
 
 const char *log_level_string(int level);
 void log_set_lock(log_LockFn fn, void *udata);

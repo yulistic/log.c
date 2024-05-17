@@ -15,8 +15,11 @@
 
 #define LOG_VERSION "0.1.0"
 
-// Comment out to disable printing.
+// Set to 0 to disable printing. This macro can be defined in another file.
+#ifndef ENABLE_PRINT
 #define ENABLE_PRINT 1
+#endif
+
 // #define ENABLE_CALLBACK 1
 
 typedef struct {
@@ -34,11 +37,10 @@ typedef void (*log_LockFn)(bool lock, void *udata);
 
 enum { LOGC_TRACE, LOGC_DEBUG, LOGC_INFO, LOGC_WARN, LOGC_ERROR, LOGC_FATAL };
 
-#ifdef ENABLE_PRINT
+#if ENABLE_PRINT == 1
 #define log_trace(...) log_log(LOGC_TRACE, __FILE__, __LINE__, __VA_ARGS__)
 #define log_debug(...) log_log(LOGC_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
 #define log_info(...) log_log(LOGC_INFO, __FILE__, __LINE__, __VA_ARGS__)
-#define log_warn(...) log_log(LOGC_WARN, __FILE__, __LINE__, __VA_ARGS__)
 
 #else
 
@@ -51,12 +53,10 @@ enum { LOGC_TRACE, LOGC_DEBUG, LOGC_INFO, LOGC_WARN, LOGC_ERROR, LOGC_FATAL };
 #define log_info(...)                                                          \
 	do {                                                                   \
 	} while (0)
-#define log_warn(...)                                                          \
-	do {                                                                   \
-	} while (0)
 
 #endif
 
+#define log_warn(...) log_log(LOGC_WARN, __FILE__, __LINE__, __VA_ARGS__)
 #define log_error(...) log_log(LOGC_ERROR, __FILE__, __LINE__, __VA_ARGS__)
 #define log_fatal(...) log_log(LOGC_FATAL, __FILE__, __LINE__, __VA_ARGS__)
 

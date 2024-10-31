@@ -42,8 +42,16 @@ enum { LOGC_TRACE, LOGC_DEBUG, LOGC_INFO, LOGC_WARN, LOGC_ERROR, LOGC_FATAL };
 #define log_debug(...) log_log(LOGC_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
 #define log_info(...) log_log(LOGC_INFO, __FILE__, __LINE__, __VA_ARGS__)
 
-#else
+#elif ENABLE_PRINT == 2
+#define log_trace(...)                                                         \
+	do {                                                                   \
+	} while (0)
+#define log_debug(...)                                                         \
+	do {                                                                   \
+	} while (0)
+#define log_info(...) log_log(LOGC_INFO, __FILE__, __LINE__, __VA_ARGS__)
 
+#else
 #define log_trace(...)                                                         \
 	do {                                                                   \
 	} while (0)
